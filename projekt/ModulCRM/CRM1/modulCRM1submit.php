@@ -2,26 +2,17 @@
 $imi=$_POST['imie'];
 $email=$_POST['mail'];
 $subskrypcja=$_POST['sub'];
-
-
-$line=file('crm.txt');
+$line=file('../../crm.txt');
+$zawartosc=end($line);
 $tab=explode(";",$zawartosc);
-$id=$tab[0];
+$id=(int)$tab[0]+1;
+if(ctype_alpha($imi)){
+    $teks=$id.';'.$imi.';'.$email.';'.$subskrypcja."\n";
+    file_put_contents('../../crm.txt',$teks,FILE_APPEND);
+    echo "Zapisano dane: ".$imi." , ".$email." , ".$subskrypcja;
 
-$teks=$id.';'.$imi.';'.$email.';'.$subskrypcja."\n";
-file_put_contents('crm.txt',$teks,FILE_APPEND);
-
-
+}
+else{
+    echo "Niepoprawne dane";
+}
 ?>
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Potwierdzenie </title>
-</head>
-<body>
-    <h1>Dane zostały Zapisane</h1>
-
-</body>
-</html>
