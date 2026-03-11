@@ -37,3 +37,4 @@ class SalesModel {
     
     // ... reszta metod (update/delete) pozostaje bez zmian
 }
+?>

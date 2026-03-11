@@ -35,3 +35,4 @@ class SalesController {
         return $stats;
     }
 }
+?>
