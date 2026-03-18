@@ -32,7 +32,7 @@ $bestTx = $controller->getHighestRevenueTransaction();
 </head>
 <body>
 
-    <h1>🛡️ Safe ERP - Moduł Sprzedaży</h1>
+    <h1>Safe ERP - Moduł Sprzedaży</h1>
 
     <div class="card">
         <h3>1. Dodaj transakcję</h3>
@@ -75,5 +75,9 @@ $bestTx = $controller->getHighestRevenueTransaction();
         </table>
     </div>
 
+
+    <div class="powrot">
+        <a href="../../index.html">Powrót do menu</a>
+    </div>
 </body>
 </html>

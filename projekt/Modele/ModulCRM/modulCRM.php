@@ -12,6 +12,9 @@
     <a href="CRM2/modulCRM2.php">Opcja 2</a>
     <a href="CRM3/modulCRM3.php">Opcja 3</a>
 
+    <div class="powrot">
+        <a href="../../index.html">Powrót do menu</a>
+    </div>
 </body>
 </html>
 
