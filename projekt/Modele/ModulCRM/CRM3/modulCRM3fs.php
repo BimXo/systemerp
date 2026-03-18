@@ -6,14 +6,14 @@
     $sub = $_POST["sub"];
 
     $linie = file('../../crm.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach($linie as $index => $linia){
-        $tab=explode(";",$linia);
-        if($tab[0]==$id){
-            $tab[1]=$imie;
-            $tab[2]=$email;
-            $tab[3]=$sub;
+    foreach($linie as $indeks => $linia){
+        $tablica = explode(";",$linia);
+        if($tablica[0] == $id){
+            $tablica[1] = $imie;
+            $tablica[2] = $email;
+            $tablica[3] = $sub;
             
-            $linie[$index] = implode(";", $tab);
+            $linie[$indeks] = implode(";", $tablica);
             echo "Zapisano dane";
             echo "<br>".$imie."  ".$email."  ".$sub;
             break;

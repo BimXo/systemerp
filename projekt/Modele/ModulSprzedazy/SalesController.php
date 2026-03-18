@@ -1,38 +1,38 @@
 <?php
-class SalesController {
+class KontrolerSprzedazy {
     public $model; // public, aby widok miał łatwy dostęp
 
     public function __construct($model) {
         $this->model = $model;
     }
 
-    public function getHighestRevenueTransaction() {
-        $data = $this->model->getAll(); // Poprawione z . na ->
-        if (empty($data)) return null;
-        usort($data, function($a, $b) { return $b[3] <=> $a[3]; });
-        return $data[0];
+    public function pobierzNajwyzszaTransakcjaPrzychod() {
+        $dane = $this->model->pobierzWszystkie(); // Poprawione z . na ->
+        if (empty($dane)) return null;
+        usort($dane, function($a, $b) { return $b[3] <=> $a[3]; });
+        return $dane[0];
     }
 
-    public function getHighestRevenueProduct() {
-        $data = $this->model->getAll();
-        $revenues = [];
-        foreach ($data as $row) {
-            $revenues[$row[2]] = ($revenues[$row[2]] ?? 0) + $row[3];
+    public function pobierzNajwyzszyPrzychodProdukt() {
+        $dane = $this->model->pobierzWszystkie();
+        $przychody = [];
+        foreach ($dane as $wiersz) {
+            $przychody[$wiersz[2]] = ($przychody[$wiersz[2]] ?? 0) + $wiersz[3];
         }
-        arsort($revenues);
-        return !empty($revenues) ? key($revenues) : null;
+        arsort($przychody);
+        return !empty($przychody) ? key($przychody) : null;
     }
 
-    public function getStatsBetweenDates($start, $end) {
-        $data = $this->model->getAll();
-        $stats = ['count' => 0, 'sum' => 0];
-        foreach ($data as $row) {
-            if ($row[4] >= $start && $row[4] <= $end) {
-                $stats['count']++;
-                $stats['sum'] += (float)$row[3];
+    public function pobierzStatystykiMiedzyDatami($poczatek, $koniec) {
+        $dane = $this->model->pobierzWszystkie();
+        $statystyki = ['count' => 0, 'sum' => 0];
+        foreach ($dane as $wiersz) {
+            if ($wiersz[4] >= $poczatek && $wiersz[4] <= $koniec) {
+                $statystyki['count']++;
+                $statystyki['sum'] += (float)$wiersz[3];
             }
         }
-        return $stats;
+        return $statystyki;
     }
 }
 ?>

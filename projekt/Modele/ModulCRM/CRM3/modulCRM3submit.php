@@ -1,17 +1,17 @@
 <?php
-$znaleziono=false;
-$id=$_POST['idih'];
-$line=file('../../crm.txt');    
-foreach($line as $linia){
-    $tab=explode(";",$linia);
-    if($tab[0]==$id){
+$znaleziono = false;
+$id = $_POST['id'];
+$linie = file('../../crm.txt');    
+foreach($linie as $linia){
+    $tablica = explode(";",$linia);
+    if($tablica[0] == $id){
         echo "Znaleziono id podaj dane:";
-        $znaleziono=true;
+        $znaleziono = true;
         break;
     }
     
 }
-if($znaleziono==false){
+if($znaleziono == false){
     die("Nie znaleziono id");
 }
 file_put_contents("id.txt", $id);

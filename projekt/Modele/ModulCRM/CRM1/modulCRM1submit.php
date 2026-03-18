@@ -1,27 +1,27 @@
 <?php
-$imi = $_POST['imie'];
+$imie = $_POST['imie'];
 
 $email = $_POST['mail'];
 
 $subskrypcja = $_POST['sub'];
 
-$line = file('../../crm.txt');
+$linie = file('../../crm.txt');
 
 $ids = [];
 
-foreach($line as $l){
-    $tab = explode(";", $l);
-    $ids[] = $tab[0];
+foreach($linie as $linia){
+    $tablica = explode(";", $linia);
+    $ids[] = $tablica[0];
 }
 
 do{
     $id = rand(1000,9999);
 }while(in_array($id,$ids));
 
-if(ctype_alpha($imi)){
-    $teks = $id.';'.$imi.';'.$email.';'.$subskrypcja."\n";
-    file_put_contents('../../crm.txt',$teks,FILE_APPEND);
-    echo "Zapisano dane: ".$imi." , ".$email." , ".$subskrypcja;
+if(ctype_alpha($imie)){
+    $tekst = $id.';'.$imie.';'.$email.';'.$subskrypcja."\n";
+    file_put_contents('../../crm.txt',$tekst,FILE_APPEND);
+    echo "Zapisano dane: ".$imie." , ".$email." , ".$subskrypcja;
 }
 else{
     echo "Niepoprawne dane";
