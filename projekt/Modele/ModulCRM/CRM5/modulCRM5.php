@@ -1,9 +1,9 @@
 <?php
 
-$linia=file('../../crm.txt');
-foreach($linia as $linia){
-     $tab=explode(";",$linia);
-     $nowe[]=$tab[2]. "\n";     
+$linie = file('../../crm.txt');
+foreach($linie as $linia){
+     $tablica = explode(";",$linia);
+     $nowe[] = $tablica[2]. "\n";     
  }
 file_put_contents('email.txt', $nowe);
 $plik = 'email.txt';

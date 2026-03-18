@@ -1,41 +1,41 @@
 <?php
 require_once "hr_model.php";
 
-$model = new HRModel();
+$model = new ModelHR();
 
 // Obsługa akcji POST
-$message = "";
+$wiadomosc = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action'])) {
-        switch ($_POST['action']) {
-            case 'add':
-                $model->create($_POST['name'], $_POST['birthdate'], $_POST['department'], $_POST['level']);
-                $message = "Pracownik dodany!";
+    if (isset($_POST['akcja'])) {
+        switch ($_POST['akcja']) {
+            case 'dodaj':
+                $model->utworz($_POST['imie'], $_POST['dataUrodzenia'], $_POST['dzial'], $_POST['poziom']);
+                $wiadomosc = "Pracownik dodany!";
                 break;
-            case 'delete':
-                $model->delete($_POST['id']);
-                $message = "Pracownik usunięty!";
+            case 'usun':
+                $model->usun($_POST['id']);
+                $wiadomosc = "Pracownik usunięty!";
                 break;
         }
     }
 }
 
 // Pobieranie danych do wyświetlenia
-$allEmployees = $model->getAll();
-$oldestYoungest = $model->getOldestAndYoungest();
-$averageAge = $model->getAverageAge();
-$departmentCounts = $model->countByDepartment();
+$wszyscyPracownicy = $model->pobierzWszystkich();
+$najstarszyNajmlodszy = $model->pobierzNajstarszegoINajmlodszego();
+$sredniWiek = $model->pobierzSredniWiek();
+$liczbaPoDzialach = $model->policzPoDzialach();
 
 // Obsługa urodzin
-$birthdays = [];
-if (isset($_POST['birthday_date'])) {
-    $birthdays = $model->getUpcomingBirthdays($_POST['birthday_date']);
+$urodziny = [];
+if (isset($_POST['data_urodzin'])) {
+    $urodziny = $model->pobierzNadchodzaceUrodziny($_POST['data_urodzin']);
 }
 
 // Obsługa poziomu
-$levelCount = "";
-if (isset($_POST['min_level'])) {
-    $levelCount = $model->countByLevel($_POST['min_level']);
+$liczbaPoPoziomie = "";
+if (isset($_POST['minimalny_poziom'])) {
+    $liczbaPoPoziomie = $model->policzPoPoziomie($_POST['minimalny_poziom']);
 }
 ?>
 
@@ -67,18 +67,18 @@ if (isset($_POST['min_level'])) {
     <div class="container">
         <h1>Moduł HR - Zarządzanie Pracownikami</h1>
 
-        <?php if ($message): ?>
-            <div class="message"><?php echo $message; ?></div>
+        <?php if ($wiadomosc): ?>
+            <div class="message"><?php echo $wiadomosc; ?></div>
         <?php endif; ?>
 
         <div class="section">
             <h2>1. Dodaj pracownika</h2>
             <form method="POST">
-                <input type="hidden" name="action" value="add">
-                <input type="text" name="name" placeholder="Imię" required>
-                <input type="date" name="birthdate" placeholder="Data urodzenia" required>
-                <input type="text" name="department" placeholder="Dział" required>
-                <input type="number" name="level" placeholder="Poziom" required>
+                <input type="hidden" name="akcja" value="dodaj">
+                <input type="text" name="imie" placeholder="Imię" required>
+                <input type="date" name="dataUrodzenia" placeholder="Data urodzenia" required>
+                <input type="text" name="dzial" placeholder="Dział" required>
+                <input type="number" name="poziom" placeholder="Poziom" required>
                 <button type="submit">Dodaj</button>
             </form>
         </div>
@@ -93,13 +93,13 @@ if (isset($_POST['min_level'])) {
                     <th>Dział</th>
                     <th>Poziom</th>
                 </tr>
-                <?php foreach ($allEmployees as $emp): ?>
+                <?php foreach ($wszyscyPracownicy as $pracownik): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($emp['id']); ?></td>
-                    <td><?php echo htmlspecialchars($emp['name']); ?></td>
-                    <td><?php echo htmlspecialchars($emp['birthdate']); ?></td>
-                    <td><?php echo htmlspecialchars($emp['department']); ?></td>
-                    <td><?php echo htmlspecialchars($emp['level']); ?></td>
+                    <td><?php echo htmlspecialchars($pracownik['id']); ?></td>
+                    <td><?php echo htmlspecialchars($pracownik['name']); ?></td>
+                    <td><?php echo htmlspecialchars($pracownik['birthdate']); ?></td>
+                    <td><?php echo htmlspecialchars($pracownik['department']); ?></td>
+                    <td><?php echo htmlspecialchars($pracownik['level']); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </table>
@@ -108,7 +108,7 @@ if (isset($_POST['min_level'])) {
         <div class="section">
             <h2>3. Usuń pracownika</h2>
             <form method="POST">
-                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="akcja" value="usun">
                 <input type="text" name="id" placeholder="ID pracownika" required>
                 <button type="submit">Usuń</button>
             </form>
@@ -116,33 +116,33 @@ if (isset($_POST['min_level'])) {
 
         <div class="section">
             <h2>4. Najstarszy i najmłodszy</h2>
-            <p>Najstarszy: <?php echo htmlspecialchars($oldestYoungest['oldest'] ?? 'Brak danych'); ?></p>
-            <p>Najmłodszy: <?php echo htmlspecialchars($oldestYoungest['youngest'] ?? 'Brak danych'); ?></p>
+            <p>Najstarszy: <?php echo htmlspecialchars($najstarszyNajmlodszy['oldest'] ?? 'Brak danych'); ?></p>
+            <p>Najmłodszy: <?php echo htmlspecialchars($najstarszyNajmlodszy['youngest'] ?? 'Brak danych'); ?></p>
         </div>
 
         <div class="section">
             <h2>5. Średni wiek</h2>
-            <p>Średni wiek: <?php echo round($averageAge, 2); ?> lat</p>
+            <p>Średni wiek: <?php echo round($sredniWiek, 2); ?> lat</p>
         </div>
 
         <div class="section">
             <h2>6. Urodziny (w ciągu 2 tygodni od podanej daty)</h2>
             <form method="POST">
-                <input type="date" name="birthday_date" required>
+                <input type="date" name="data_urodzin" required>
                 <button type="submit">Sprawdź</button>
             </form>
-            <?php if ($birthdays): ?>
+            <?php if ($urodziny): ?>
                 <table>
                     <tr>
                         <th>Imię</th>
                         <th>Data urodzenia</th>
                         <th>Dział</th>
                     </tr>
-                    <?php foreach ($birthdays as $emp): ?>
+                    <?php foreach ($urodziny as $pracownik): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($emp['name']); ?></td>
-                        <td><?php echo htmlspecialchars($emp['birthdate']); ?></td>
-                        <td><?php echo htmlspecialchars($emp['department']); ?></td>
+                        <td><?php echo htmlspecialchars($pracownik['name']); ?></td>
+                        <td><?php echo htmlspecialchars($pracownik['birthdate']); ?></td>
+                        <td><?php echo htmlspecialchars($pracownik['department']); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </table>
@@ -152,11 +152,11 @@ if (isset($_POST['min_level'])) {
         <div class="section">
             <h2>7. Liczba pracowników z poziomem >=</h2>
             <form method="POST">
-                <input type="number" name="min_level" placeholder="Minimalny poziom" required>
+                <input type="number" name="minimalny_poziom" placeholder="Minimalny poziom" required>
                 <button type="submit">Sprawdź</button>
             </form>
-            <?php if ($levelCount !== ""): ?>
-                <p>Liczba: <?php echo $levelCount; ?></p>
+            <?php if ($liczbaPoPoziomie !== ""): ?>
+                <p>Liczba: <?php echo $liczbaPoPoziomie; ?></p>
             <?php endif; ?>
         </div>
 
@@ -167,10 +167,10 @@ if (isset($_POST['min_level'])) {
                     <th>Dział</th>
                     <th>Liczba pracowników</th>
                 </tr>
-                <?php foreach ($departmentCounts as $dep => $count): ?>
+                <?php foreach ($liczbaPoDzialach as $dzial => $liczba): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($dep); ?></td>
-                    <td><?php echo $count; ?></td>
+                    <td><?php echo htmlspecialchars($dzial); ?></td>
+                    <td><?php echo $liczba; ?></td>
                 </tr>
                 <?php endforeach; ?>
             </table>

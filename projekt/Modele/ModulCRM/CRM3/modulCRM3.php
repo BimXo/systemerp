@@ -7,7 +7,7 @@
 </head>
 <body>
     <form method="post" action="modulCRM3submit.php">
-        <input type="number" name="idih" required>
+        <input type="number" name="id" required>
         <input type="submit" value="wyszukaj">
 </body>
 </html>

@@ -1,110 +1,113 @@
 <?php
 
-class HRModel {
-    private $file = "employees.txt";
+class ModelHR {
+    private $plik = "employees.txt";
 
-    private function readData() {
-        if (!file_exists($this->file)) {
+    private function czytajDane() {
+        if (!file_exists($this->plik)) {
             return [];
         }
-        $data = file_get_contents($this->file);
-        return json_decode($data, true) ?? [];
+        $dane = file_get_contents($this->plik);
+        return json_decode($dane, true) ?? [];
     }
 
-    private function writeData($data) {
-        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    private function zapiszDane($dane) {
+        file_put_contents($this->plik, json_encode($dane, JSON_PRETTY_PRINT));
     }
 
-    public function getAll() {
-        return $this->readData();
+    public function pobierzWszystkich() {
+        return $this->czytajDane();
     }
 
-    public function create($name, $birthdate, $department, $level) {
-        $data = $this->readData();
+    public function utworz($imie, $dataUrodzenia, $dzial, $poziom) {
+        $dane = $this->czytajDane();
 
-        $employee = [
-            "id" => uniqid(),
-            "name" => $name,
-            "birthdate" => $birthdate, // YYYY-MM-DD
-            "department" => $department,
-            "level" => (int)$level
+        $id = count($dane) + 1;
+
+        $pracownik = [
+            "id" => $id,
+            "name" => $imie,
+            "birthdate" => $dataUrodzenia, // YYYY-MM-DD
+            "department" => $dzial,
+            "level" => (int)$poziom
         ];
 
-        $data[] = $employee;
-        $this->writeData($data);
+        $dane[] = $pracownik;
+        $this->zapiszDane($dane);
     }
 
-    public function delete($id) {
-        $data = $this->readData();
-        $data = array_filter($data, fn($e) => $e["id"] !== $id);
-        $this->writeData(array_values($data));
+    public function usun($id) {
+        $id = (int)$id;
+        $dane = $this->czytajDane();
+        $dane = array_filter($dane, fn($pracownik) => $pracownik["id"] !== $id);
+        $this->zapiszDane(array_values($dane));
     }
 
-    public function update($id, $name, $birthdate, $department, $level) {
-        $data = $this->readData();
+    public function aktualizuj($id, $imie, $dataUrodzenia, $dzial, $poziom) {
+        $dane = $this->czytajDane();
 
-        foreach ($data as &$e) {
-            if ($e["id"] === $id) {
-                $e["name"] = $name;
-                $e["birthdate"] = $birthdate;
-                $e["department"] = $department;
-                $e["level"] = (int)$level;
+        foreach ($dane as &$pracownik) {
+            if ($pracownik["id"] === $id) {
+                $pracownik["name"] = $imie;
+                $pracownik["birthdate"] = $dataUrodzenia;
+                $pracownik["department"] = $dzial;
+                $pracownik["level"] = (int)$poziom;
             }
         }
 
-        $this->writeData($data);
+        $this->zapiszDane($dane);
     }
 
 
-    public function getOldestAndYoungest() {
-        $data = $this->readData();
+    public function pobierzNajstarszegoINajmlodszego() {
+        $dane = $this->czytajDane();
 
-        usort($data, fn($a, $b) => strtotime($a["birthdate"]) - strtotime($b["birthdate"]));
+        usort($dane, fn($a, $b) => strtotime($a["birthdate"]) - strtotime($b["birthdate"]));
 
         return [
-            "oldest" => $data[0]["name"] ?? null,
-            "youngest" => $data[count($data)-1]["name"] ?? null
+            "oldest" => $dane[0]["name"] ?? null,
+            "youngest" => $dane[count($dane)-1]["name"] ?? null
         ];
     }
 
-    public function getAverageAge() {
-        $data = $this->readData();
-        $today = time();
+    public function pobierzSredniWiek() {
+        $dane = $this->czytajDane();
+        $dzisiaj = time();
 
-        $ages = array_map(function($e) use ($today) {
-            return floor(($today - strtotime($e["birthdate"])) / (365*24*60*60));
-        }, $data);
+        $wieki = array_map(function($pracownik) use ($dzisiaj) {
+            return floor(($dzisiaj - strtotime($pracownik["birthdate"])) / (365*24*60*60));
+        }, $dane);
 
-        return count($ages) ? array_sum($ages) / count($ages) : 0;
+        return count($wieki) ? array_sum($wieki) / count($wieki) : 0;
     }
 
-    public function getUpcomingBirthdays($date) {
-        $data = $this->readData();
-        $base = strtotime($date);
+    public function pobierzNadchodzaceUrodziny($data) {
+        $dane = $this->czytajDane();
+        $podstawa = strtotime($data);
 
-        return array_filter($data, function($e) use ($base) {
-            $bday = strtotime(date("Y") . "-" . date("m-d", strtotime($e["birthdate"])));
-            return ($bday >= $base && $bday <= strtotime("+14 days", $base));
+        return array_filter($dane, function($pracownik) use ($podstawa) {
+            $dzieńUrodzin = strtotime(date("Y") . "-" . date("m-d", strtotime($pracownik["birthdate"])));
+            return ($dzieńUrodzin >= $podstawa && $dzieńUrodzin <= strtotime("+14 days", $podstawa));
         });
     }
 
-    public function countByLevel($minLevel) {
-        $data = $this->readData();
-        return count(array_filter($data, fn($e) => $e["level"] >= $minLevel));
+    public function policzPoPoziomie($minimalnyPoziom) {
+        $dane = $this->czytajDane();
+        return count(array_filter($dane, fn($pracownik) => $pracownik["level"] >= $minimalnyPoziom));
     }
 
-    public function countByDepartment() {
-        $data = $this->readData();
-        $result = [];
+    public function policzPoDzialach() {
+        $dane = $this->czytajDane();
+        $wynik = [];
 
-        foreach ($data as $e) {
-            $dep = $e["department"];
-            if (!isset($result[$dep])) {
-                $result[$dep] = 0;
+        foreach ($dane as $pracownik) {
+            $dzial = $pracownik["department"];
+            if (!isset($wynik[$dzial])) {
+                $wynik[$dzial] = 0;
             }
-            $result[$dep]++;
+            $wynik[$dzial]++;
         }
 
-        return $result;
+        return $wynik;
     }
 }
