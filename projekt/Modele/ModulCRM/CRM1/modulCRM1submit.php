@@ -15,7 +15,7 @@ foreach($line as $l){
 }
 
 do{
-    $id = rand(1000,9999); // losowe ID
+    $id = rand(1000,9999);
 }while(in_array($id,$ids));
 
 if(ctype_alpha($imi)){
