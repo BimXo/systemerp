@@ -1,2 +1,2 @@
-
-1;Jacek;kubaa@gmail.com;Aktualności
+1;Jacki;kuba@gmail.com;Newsletter
+2;Kuba;jacek@gmail.com;Promocje, Aktualności

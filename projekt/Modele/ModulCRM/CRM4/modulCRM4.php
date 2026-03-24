@@ -19,7 +19,7 @@
     <div class="card">
         <form method="post" action="modulCRM4submit.php">
             <input type="number" name="id" placeholder="ID rekordu" required>
-            <button type="submit">Usuń</button>
+            <button type="submit" class="btn-delete">Usuń</button>
         </form>
     </div>
 </div>

@@ -32,7 +32,7 @@
                 <option value="Wydarzenia">Wydarzenia</option>
             </select><br><br>
             
-            <button type="submit">Zapisz</button>
+            <button type="submit" class="btn-save">Zapisz</button>
         </form>
     </div>
 </div>

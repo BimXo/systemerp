@@ -75,10 +75,49 @@ input[type="email"] {
     width: 100%;
     max-width: 380px;
     padding: 10px;
-    margin: 8px 0;
+    margin: 8px 0 16px 0;
     border: 1px solid #ccd6dd;
     border-radius: 6px;
     box-sizing: border-box;
+    font-size: 14px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+select {
+    width: 100%;
+    max-width: 380px;
+    padding: 10px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccd6dd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: white;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: #2f3b50;
+}
+
+form {
+    margin-bottom: 20px;
 }
 
 button {
@@ -93,6 +132,81 @@ button {
 
 button:hover {
     background: #084b72;
+}
+
+/* Submit button styles */
+button[type="submit"] {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 120px;
+}
+
+/* Save button - green */
+.btn-save {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #218838, #1aa085);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Search button - blue */
+.btn-search {
+    background: linear-gradient(135deg, #007bff, #6610f2);
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.btn-search:hover {
+    background: linear-gradient(135deg, #0056b3, #5a0fc8);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Delete button - red */
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #c82333, #e8680d);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Export button - purple */
+.btn-export {
+    background: linear-gradient(135deg, #6f42c1, #e83e8c);
+    box-shadow: 0 2px 4px rgba(111, 66, 193, 0.3);
+}
+
+.btn-export:hover {
+    background: linear-gradient(135deg, #5a32a3, #d63384);
+    box-shadow: 0 4px 8px rgba(111, 66, 193, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Button focus states */
+button[type="submit"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Button active states */
+button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 table {
@@ -148,6 +262,170 @@ th {
 
 .powrot a:hover {
     text-decoration: underline;
+}
+
+/* Result page styling */
+.result-page .card {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.result-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.message {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.message.success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: 1px solid #b8daff;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.message.success::before {
+    content: "✓";
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.message.error {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.message.error::before {
+    content: "✕";
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.message.info {
+    background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.message.info::before {
+    content: "ℹ";
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #17a2b8;
+}
+
+.message-content {
+    padding-left: 40px;
+    text-align: left;
+}
+
+.result-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.result-actions .btn-save,
+.result-actions .btn-search,
+.result-actions .btn-delete,
+.result-actions .btn-export {
+    padding: 14px 24px;
+    font-size: 16px;
+    min-width: 140px;
+}
+
+/* Specific result page styles */
+.crm-1-submit .message {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border-left-color: #28a745;
+}
+
+.crm-1-submit .message::before {
+    content: "✓";
+    color: #28a745;
+}
+
+.crm-3-submit .message {
+    background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+    border-left-color: #17a2b8;
+}
+
+.crm-3-submit .message::before {
+    content: "ℹ";
+    color: #17a2b8;
+}
+
+.crm-3-fs .message {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border-left-color: #28a745;
+}
+
+.crm-3-fs .message::before {
+    content: "✓";
+    color: #28a745;
+}
+
+.crm-4-submit .message {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border-left-color: #ffc107;
+    color: #856404;
+}
+
+.crm-4-submit .message::before {
+    content: "🗑";
+    color: #ffc107;
+}
+
+/* Enhanced navigation for result pages */
+.result-page nav {
+    background: #f8f9fa;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.result-page nav a {
+    background: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.result-page nav a:hover {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
 }
 
 

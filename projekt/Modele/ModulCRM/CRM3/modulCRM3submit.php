@@ -38,7 +38,7 @@ $wiadomosc = "Znaleziono rekord. Uzupełnij dane i zapisz.";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Edycja rekordu</title>
-    <link rel="stylesheet" href="../../css/crm.css">
+    <link rel="stylesheet" href="../../../css/crm.css">
 </head>
 <body class="crm crm-3-submit">
 <header>
@@ -50,20 +50,25 @@ $wiadomosc = "Znaleziono rekord. Uzupełnij dane i zapisz.";
     </nav>
 </header>
 
-<div class="container">
+<div class="container result-page">
     <div class="card">
-        <div class="message"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        <div class="message info">
+            <div class="message-content"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        </div>
         <form method="post" action="modulCRM3fs.php">
             <label for="imie">Imię:</label>
-            <input type="text" id="imie" name="imie" value="<?php echo htmlspecialchars($rekord['imie']); ?>" required><br><br>
+            <input type="text" id="imie" name="imie" value="<?php echo htmlspecialchars($rekord['imie']); ?>" required>
             
             <label for="mail">Email:</label>
-            <input type="email" id="mail" name="mail" value="<?php echo htmlspecialchars($rekord['email']); ?>" required><br><br>
+            <input type="email" id="mail" name="mail" value="<?php echo htmlspecialchars($rekord['email']); ?>" required>
             
             <label for="sub">Subskrypcje:</label>
-            <input type="text" id="sub" name="sub" value="<?php echo htmlspecialchars($rekord['subskrypcje']); ?>" required><br><br>
+            <input type="text" id="sub" name="sub" value="<?php echo htmlspecialchars($rekord['subskrypcje']); ?>" required>
             
-            <button type="submit">Zapisz zmiany</button>
+            <div class="result-actions">
+                <button type="submit" class="btn-save">Zapisz zmiany</button>
+                <a href="modulCRM3.php" class="btn-search">Anuluj</a>
+            </div>
         </form>
     </div>
 </div>

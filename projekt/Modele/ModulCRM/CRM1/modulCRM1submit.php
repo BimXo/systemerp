@@ -37,8 +37,10 @@ if (empty($bledy)) {
     file_put_contents($plik, $tekst, FILE_APPEND);
 
     $wiadomosc = "Zapisano dane: ID $id, $imie, $email, Subskrypcje: $subskrypcjaStr";
+    $messageClass = "success";
 } else {
     $wiadomosc = "Błędy: " . implode(' ', $bledy);
+    $messageClass = "error";
 }
 ?>
 
@@ -48,7 +50,7 @@ if (empty($bledy)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Zapis</title>
-    <link rel="stylesheet" href="../../css/crm.css">
+    <link rel="stylesheet" href="../../../css/crm.css">
 </head>
 <body class="crm crm-1-submit">
 <header>
@@ -60,9 +62,15 @@ if (empty($bledy)) {
     </nav>
 </header>
 
-<div class="container">
+<div class="container result-page">
     <div class="card">
-        <div class="message"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        <div class="message <?php echo $messageClass; ?>">
+            <div class="message-content"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        </div>
+        <div class="result-actions">
+            <a href="modulCRM1.php" class="btn-save">Dodaj kolejnego użytkownika</a>
+            <a href="../modulCRM.php" class="btn-search">Powrót do menu</a>
+        </div>
     </div>
 </div>
 

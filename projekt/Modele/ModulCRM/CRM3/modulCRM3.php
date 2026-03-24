@@ -19,7 +19,7 @@
     <div class="card">
         <form method="post" action="modulCRM3submit.php">
             <input type="number" name="id" placeholder="ID rekordu" required>
-            <button type="submit">Wyszukaj</button>
+            <button type="submit" class="btn-search">Wyszukaj</button>
         </form>
     </div>
 </div>

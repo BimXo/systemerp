@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="card">
         <p>Kliknij przycisk, aby pobrać listę adresów email (plik tekstowy).</p>
         <form method="POST">
-            <button type="submit">Pobierz listę email</button>
+            <button type="submit" class="btn-export">Pobierz listę email</button>
         </form>
     </div>
 </div>

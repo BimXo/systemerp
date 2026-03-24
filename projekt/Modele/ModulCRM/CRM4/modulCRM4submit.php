@@ -33,7 +33,7 @@ if ($usunieto) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Usuwanie</title>
-    <link rel="stylesheet" href="../../css/crm.css">
+    <link rel="stylesheet" href="../../../css/crm.css">
 </head>
 <body class="crm crm-4-submit">
 <header>
@@ -45,9 +45,15 @@ if ($usunieto) {
     </nav>
 </header>
 
-<div class="container">
+<div class="container result-page">
     <div class="card">
-        <div class="message"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        <div class="message success">
+            <div class="message-content"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        </div>
+        <div class="result-actions">
+            <a href="modulCRM4.php" class="btn-delete">Usuń inny rekord</a>
+            <a href="../modulCRM.php" class="btn-save">Powrót do menu</a>
+        </div>
     </div>
 </div>
 

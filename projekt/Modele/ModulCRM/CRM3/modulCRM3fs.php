@@ -24,6 +24,7 @@ if (empty($sub)) {
 
 if (!empty($bledy)) {
     $wiadomosc = "Błędy: " . implode(' ', $bledy);
+    $messageClass = "error";
 } else {
     // Znajdź i zaktualizuj rekord
     $plik = '../crm.txt';
@@ -44,8 +45,10 @@ if (!empty($bledy)) {
     if ($znaleziono) {
         file_put_contents($plik, implode("\n", $linie) . "\n");
         $wiadomosc = "Zapisano dane: $imie, $email, $sub";
+        $messageClass = "success";
     } else {
         $wiadomosc = "Nie znaleziono rekordu do zapisania.";
+        $messageClass = "error";
     }
 }
 
@@ -59,7 +62,7 @@ unlink('id.txt');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Zapis</title>
-    <link rel="stylesheet" href="../../css/crm.css">
+    <link rel="stylesheet" href="../../../css/crm.css">
 </head>
 <body class="crm crm-3-fs">
 <header>
@@ -71,36 +74,15 @@ unlink('id.txt');
     </nav>
 </header>
 
-<div class="container">
+<div class="container result-page">
     <div class="card">
-        <div class="message"><?php echo htmlspecialchars($wiadomosc); ?></div>
-    </div>
-</div>
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM - Zapis</title>
-    <link rel="stylesheet" href="../../css/crm.css">
-</head>
-<body class="crm crm-3-fs">
-<header>
-    <h1>CRM - Zapis rekordu</h1>
-    <nav>
-        <a href="modulCRM3.php">Wyszukaj ponownie</a>
-        <a href="../modulCRM.php">Menu CRM</a>
-        <a href="javascript:history.back()">Wstecz</a>
-    </nav>
-</header>
-
-<div class="container">
-    <div class="card">
-        <div class="message"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        <div class="message <?php echo $messageClass; ?>">
+            <div class="message-content"><?php echo htmlspecialchars($wiadomosc); ?></div>
+        </div>
+        <div class="result-actions">
+            <a href="modulCRM3.php" class="btn-search">Edytuj kolejny rekord</a>
+            <a href="../modulCRM.php" class="btn-save">Powrót do menu</a>
+        </div>
     </div>
 </div>
 
