@@ -45,23 +45,8 @@ if (isset($_POST['minimalny_poziom'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moduł HR</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
-        form { margin-bottom: 15px; }
-        input, button { padding: 8px; margin: 5px 0; }
-        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .message { color: green; font-weight: bold; }
-        .powrot { margin-top: 20px; }
-        .powrot a { color: #007BFF; text-decoration: none; }
-        .powrot a:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/hr.css">
 </head>
 <body>
     <div class="container">

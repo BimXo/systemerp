@@ -1,29 +1,36 @@
 <?php
-$znaleziono = false;
-$id = $_POST['id'];
-$linie = file('../../crm.txt');    
-foreach($linie as $linia){
-    $tablica = explode(";",$linia);
-    if($tablica[0] == $id){
-        $wiadomosc = "Znaleziono ID, uzupełnij dane i zapisz.";
-        $znaleziono = true;
+// Pobierz ID z POST
+$id = trim($_POST['id'] ?? '');
+if (empty($id) || !is_numeric($id)) {
+    die("Niepoprawne ID.");
+}
+
+// Znajdź rekord
+$plik = '../crm.txt';
+$linie = file_exists($plik) ? file($plik, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
+$rekord = null;
+foreach ($linie as $linia) {
+    $dane = explode(';', $linia);
+    if (isset($dane[0]) && $dane[0] == $id) {
+        $rekord = [
+            'id' => $dane[0],
+            'imie' => $dane[1] ?? '',
+            'email' => $dane[2] ?? '',
+            'subskrypcje' => $dane[3] ?? ''
+        ];
         break;
     }
-    
 }
-if($znaleziono == false){
-    die("Nie znaleziono id");
+
+if (!$rekord) {
+    die("Nie znaleziono rekordu o ID $id.");
 }
-file_put_contents("id.txt", $id);
 
+// Zapisz ID do pliku tymczasowego
+file_put_contents('id.txt', $id);
 
+$wiadomosc = "Znaleziono rekord. Uzupełnij dane i zapisz.";
 ?>
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="pl">
@@ -31,9 +38,9 @@ file_put_contents("id.txt", $id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Edycja rekordu</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../css/crm.css">
 </head>
-<body>
+<body class="crm crm-3-submit">
 <header>
     <h1>CRM - Edycja rekordu</h1>
     <nav>
@@ -45,14 +52,18 @@ file_put_contents("id.txt", $id);
 
 <div class="container">
     <div class="card">
-        <?php if (!empty($wiadomosc)): ?>
-            <div class="message"><?php echo htmlspecialchars($wiadomosc); ?></div>
-        <?php endif; ?>
+        <div class="message"><?php echo htmlspecialchars($wiadomosc); ?></div>
         <form method="post" action="modulCRM3fs.php">
-            <input type="text" name="imie" placeholder="Imię" required>
-            <input type="text" name="mail" placeholder="Email" required>
-            <input type="text" name="sub" placeholder="Subskrypcja" required>
-            <button type="submit">Zapisz</button>
+            <label for="imie">Imię:</label>
+            <input type="text" id="imie" name="imie" value="<?php echo htmlspecialchars($rekord['imie']); ?>" required><br><br>
+            
+            <label for="mail">Email:</label>
+            <input type="email" id="mail" name="mail" value="<?php echo htmlspecialchars($rekord['email']); ?>" required><br><br>
+            
+            <label for="sub">Subskrypcje:</label>
+            <input type="text" id="sub" name="sub" value="<?php echo htmlspecialchars($rekord['subskrypcje']); ?>" required><br><br>
+            
+            <button type="submit">Zapisz zmiany</button>
         </form>
     </div>
 </div>

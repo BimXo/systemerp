@@ -20,15 +20,8 @@ $najwyzszaTransakcja = $kontroler->pobierzNajwyzszaTransakcjaPrzychod();
 <html>
 <head>
     <title>Bezpieczny ERP</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; background: #f4f4f4; }
-        .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        th { background: #f8f8f8; }
-        input { padding: 8px; margin: 5px 0; width: 200px; display: block; }
-        .stats { color: green; font-weight: bold; }
-    </style>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/sales.css">
 </head>
 <body>
 

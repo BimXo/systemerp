@@ -1,0 +1,5 @@
+/* Sales module additional styles */
+.card, .powrot { margin: 0 auto; max-width: 1000px; }
+.card { padding: 20px; border-radius: 8px; }
+.stats { color: #1f7b2d; font-weight: bold; }
+input[type="text"], input[type="number"], input[type="date"]{ max-width: 400px; }

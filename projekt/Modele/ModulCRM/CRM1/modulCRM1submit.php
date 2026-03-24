@@ -1,25 +1,44 @@
 <?php
-$imie = $_POST['imie'];
-$email = $_POST['mail'];
-$subskrypcja = $_POST['sub'];
+// Pobierz dane z POST
+$imie = trim($_POST['imie'] ?? '');
+$email = trim($_POST['mail'] ?? '');
+$subskrypcje = $_POST['sub'] ?? [];
 
-$linie = file('../../crm.txt');
-$ids = [];
-foreach($linie as $linia){
-    $tablica = explode(";", $linia);
-    $ids[] = $tablica[0];
+// Walidacja
+$bledy = [];
+if (empty($imie) || !preg_match('/^[a-zA-Z\s]+$/', $imie)) {
+    $bledy[] = "Imię może zawierać tylko litery i spacje.";
+}
+if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $bledy[] = "Niepoprawny adres email.";
+}
+if (empty($subskrypcje)) {
+    $bledy[] = "Wybierz przynajmniej jedną subskrypcję.";
 }
 
-do {
-    $id = rand(1000,9999);
-} while (in_array($id, $ids));
+if (empty($bledy)) {
+    // Znajdź następne ID
+    $plik = '../crm.txt';
+    $linie = file_exists($plik) ? file($plik, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
+    $maxId = 0;
+    foreach ($linie as $linia) {
+        $dane = explode(';', $linia);
+        if (isset($dane[0]) && is_numeric($dane[0])) {
+            $maxId = max($maxId, (int)$dane[0]);
+        }
+    }
+    $id = $maxId + 1;
 
-if (ctype_alpha($imie)) {
-    $tekst = $id.';'.$imie.';'.$email.';'.$subskrypcja."\n";
-    file_put_contents('../../crm.txt', $tekst, FILE_APPEND);
-    $wiadomosc = "Zapisano dane: $imie , $email , $subskrypcja";
+    // Przygotuj subskrypcje
+    $subskrypcjaStr = implode(', ', $subskrypcje);
+
+    // Zapisz do pliku
+    $tekst = $id . ';' . $imie . ';' . $email . ';' . $subskrypcjaStr . "\n";
+    file_put_contents($plik, $tekst, FILE_APPEND);
+
+    $wiadomosc = "Zapisano dane: ID $id, $imie, $email, Subskrypcje: $subskrypcjaStr";
 } else {
-    $wiadomosc = "Niepoprawne dane";
+    $wiadomosc = "Błędy: " . implode(' ', $bledy);
 }
 ?>
 
@@ -29,9 +48,9 @@ if (ctype_alpha($imie)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Zapis</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../css/crm.css">
 </head>
-<body>
+<body class="crm crm-1-submit">
 <header>
     <h1>CRM - Zapis danych</h1>
     <nav>

@@ -1,17 +1,30 @@
 <?php
-$id = $_POST['id'];
-$linie = file('../../crm.txt');
+// Pobierz ID
+$id = trim($_POST['id'] ?? '');
+if (empty($id) || !is_numeric($id)) {
+    die("Niepoprawne ID.");
+}
+
+// Usuń rekord
+$plik = '../crm.txt';
+$linie = file_exists($plik) ? file($plik, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
 $nowe = [];
-$wiadomosc = "Nie znaleziono rekordu do usunięcia.";
-foreach($linie as $linia){
-    $tablica = explode(";", $linia);
-    if($tablica[0] != $id){
+$usunieto = false;
+foreach ($linie as $linia) {
+    $tablica = explode(';', $linia);
+    if (isset($tablica[0]) && $tablica[0] != $id) {
         $nowe[] = $linia;
     } else {
-        $wiadomosc = "Usunięto rekord o ID: $id";
+        $usunieto = true;
     }
 }
-file_put_contents('../../crm.txt', $nowe);
+
+if ($usunieto) {
+    file_put_contents($plik, implode("\n", $nowe) . "\n");
+    $wiadomosc = "Usunięto rekord o ID: $id";
+} else {
+    $wiadomosc = "Nie znaleziono rekordu o ID: $id";
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,9 +33,9 @@ file_put_contents('../../crm.txt', $nowe);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Usuwanie</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../css/crm.css">
 </head>
-<body>
+<body class="crm crm-4-submit">
 <header>
     <h1>CRM - Usuwanie rekordu</h1>
     <nav>
@@ -40,4 +53,3 @@ file_put_contents('../../crm.txt', $nowe);
 
 </body>
 </html>
-

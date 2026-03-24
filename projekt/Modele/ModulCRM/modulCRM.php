@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System CRM</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../css/crm.css">
 </head>
-<body>
+<body class="crm crm-menu">
 <header>
     <h1>System CRM</h1>
     <nav>

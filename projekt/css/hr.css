@@ -1,0 +1,11 @@
+/* HR module additional styles */
+.container { max-width: 1200px; margin: 0 auto; }
+.section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+input, button { width: auto; max-width: 420px; }
+button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+button:hover { background-color: #45a049; }
+.message { color: #1f7a24; }
+.powrot a { color: #007BFF; text-decoration: none; }
+.powrot a:hover { text-decoration: underline; }
+
+h1,h2,h3{ color: #2f3b50; }

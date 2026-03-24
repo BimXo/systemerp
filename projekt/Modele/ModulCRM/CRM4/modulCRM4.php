@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Usuń rekord</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../../css/crm.css">
 </head>
-<body>
+<body class="crm crm-4">
 <header>
     <h1>CRM - Usuń rekord</h1>
     <nav>

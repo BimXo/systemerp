@@ -1,17 +1,25 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $linie = file('../../crm.txt');
-    $nowe = [];
-    foreach($linie as $linia){
-        $tablica = explode(";", $linia);
-        $nowe[] = $tablica[2] . "\n";
+    // Pobierz emaile z pliku CRM
+    $plik = '../crm.txt';
+    $linie = file_exists($plik) ? file($plik, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
+    $emaile = [];
+    foreach ($linie as $linia) {
+        $dane = explode(';', $linia);
+        if (isset($dane[2]) && !empty($dane[2])) {
+            $emaile[] = $dane[2];
+        }
     }
-    file_put_contents('email.txt', $nowe);
-    $plik = 'email.txt';
+    
+    // Zapisz do pliku tymczasowego
+    $zawartosc = implode("\n", $emaile) . "\n";
+    file_put_contents('email.txt', $zawartosc);
+    
+    // Wyślij plik do pobrania
     header('Content-Type: text/plain');
-    header('Content-Disposition: attachment; filename="email.txt"');
-    header('Content-Length: ' . filesize($plik));
-    readfile($plik);
+    header('Content-Disposition: attachment; filename="emails.txt"');
+    header('Content-Length: ' . strlen($zawartosc));
+    echo $zawartosc;
     exit;
 }
 ?>
@@ -22,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - Eksport email</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../../css/crm.css">
 </head>
-<body>
+<body class="crm crm-5">
 <header>
     <h1>CRM - Eksport listy email</h1>
     <nav>

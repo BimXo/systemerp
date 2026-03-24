@@ -1,0 +1,153 @@
+/* CRM module style from original ModulCRM/style.css */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f6fb;
+    color: #2f3b50;
+    line-height: 1.5;
+}
+
+a {
+    color: #1b6bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header {
+    background: #1f3a7a;
+    color: white;
+    padding: 15px 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 12px;
+    font-weight: 600;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 960px;
+    margin: 24px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e1e7ed;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"] {
+    width: 100%;
+    max-width: 380px;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccd6dd;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #0b5a8a;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button:hover {
+    background: #084b72;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    border: 1px solid #e1e7ed;
+    text-align: left;
+}
+
+th {
+    background: #f0f5fa;
+}
+
+.message {
+    padding: 12px;
+    border-radius: 8px;
+    background: #e6ffed;
+    border: 1px solid #b7f2ce;
+    color: #0b5a8a;
+    margin-bottom: 16px;
+}
+
+.back-links {
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+}
+
+.back-links a {
+    color: #0b5a8a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-links a:hover {
+    text-decoration: underline;
+}
+
+.powrot {
+    margin: 16px 0;
+}
+
+.powrot a {
+    color: #1b6bff;
+    text-decoration: none;
+}
+
+.powrot a:hover {
+    text-decoration: underline;
+}
+
+
