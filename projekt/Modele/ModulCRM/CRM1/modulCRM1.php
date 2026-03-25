@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../../css/crm.css">
 </head>
 <body class="crm crm-1">
+    
 <header>
     <h1>CRM – Dodaj klienta</h1>
     <nav class="menu">

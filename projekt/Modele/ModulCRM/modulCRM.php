@@ -25,7 +25,7 @@
         <p>Wybierz jedną z opcji powyżej, aby zarządzać danymi CRM.</p>
         <hr>
         <div class="powrot">
-            <a href="../../index.html">← Strona główna</a>
+            <a href="../../index.php">← Strona główna</a>
         </div>
     </div>
 </div>

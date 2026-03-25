@@ -212,7 +212,7 @@ if (isset($_GET['minimalny_poziom']) && $_GET['minimalny_poziom'] !== '') {
     </div>
 
     <div class="powrot">
-        <a href="../../index.html">← Powrót do menu</a>
+        <a href="../../index.php">Powrót do menu</a>
     </div>
 </div>
 </body>
