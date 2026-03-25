@@ -65,7 +65,7 @@ if (isset($_GET['edytuj'])) {
 
     <!-- ── 1. FORMULARZ DODAWANIA / EDYCJI ─────────────────────────────── -->
     <div class="section">
-        <h2><?= $edytowana ? '✏️ Edytuj transakcję #' . htmlspecialchars($edytowana[0]) : '1. Dodaj transakcję' ?></h2>
+        <h2><?= $edytowana ? 'Edytuj transakcję #' . htmlspecialchars($edytowana[0]) : '1. Dodaj transakcję' ?></h2>
         <form method="POST">
             <input type="hidden" name="akcja" value="<?= $edytowana ? 'edytuj' : 'dodaj' ?>">
             <?php if ($edytowana): ?>
