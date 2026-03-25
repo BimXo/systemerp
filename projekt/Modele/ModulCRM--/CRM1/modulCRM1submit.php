@@ -7,7 +7,6 @@ $email       = trim($_POST['mail'] ?? '');
 $subskrypcje = $_POST['sub'] ?? [];
 
 // ── Ścieżka do bazy ─────────────────────────────────────────────────────────
-// BŁĄD ORYGINAŁU: $plik nie był nigdy zdefiniowany → Fatal error
 $plik = '../crm.txt';
 
 // ── Walidacja ────────────────────────────────────────────────────────────────
