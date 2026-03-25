@@ -7,6 +7,7 @@ $email       = trim($_POST['mail'] ?? '');
 $subskrypcje = $_POST['sub'] ?? [];
 
 // ── Ścieżka do bazy ─────────────────────────────────────────────────────────
+
 $plik = '../crm.txt';
 
 // ── Walidacja ────────────────────────────────────────────────────────────────
@@ -26,7 +27,7 @@ if (empty($bledy)) {
     $linie = file_exists($plik)
         ? file($plik, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)
         : [];
- 
+
     $istniejaceId = [];
     foreach ($linie as $linia) {
         $dane = explode(';', $linia);
@@ -34,16 +35,22 @@ if (empty($bledy)) {
             $istniejaceId[] = (int)cezar($dane[0], -3);
         }
     }
- 
+
     // Losuj ID z zakresu 1000–9999 dopóki nie trafi się unikalne
     do {
         $id = rand(1000, 9999);
     } while (in_array($id, $istniejaceId, true));
- 
+
+    // Zapisz do pliku (wszystko zaszyfrowane szyfrem Cezara +3)
+    $subStr = implode(', ', $subskrypcje);
+    $wiersz = cezar((string)$id, 3) . ';'
+            . cezar($imie, 3)       . ';'
+            . cezar($email, 3)      . ';'
+            . cezar($subStr, 3)     . "\n";
 
     file_put_contents($plik, $wiersz, FILE_APPEND);
 
-    $wiadomosc    = "Zapisano klienta: ID $id | $imie | $email | Subskrypcje: $subskrypcje";
+    $wiadomosc    = "Zapisano klienta: ID $id | $imie | $email | Subskrypcje: $subStr";
     $messageClass = "success";
 } else {
     $wiadomosc    = "Błędy formularza: " . implode(' ', $bledy);
