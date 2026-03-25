@@ -230,13 +230,13 @@ if (isset($_GET['edytuj'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bezpieczny ERP – Modul Sprzedazy</title>
+    <title>Moduł Sprzedazy</title>
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/sales.css">
 </head>
 <body>
 <div class="container">
-    <h1>Bezpieczny ERP – Modul Sprzedazy</h1>
+    <h1>Moduł Sprzedazy</h1>
 
     <?php if ($wiadomosc): ?>
         <div class="message"><?= htmlspecialchars($wiadomosc) ?></div>
@@ -305,7 +305,7 @@ if (isset($_GET['edytuj'])) {
         <?php if ($najlepszyProdukt): ?>
             <p class="stats">
                 Produkt: <strong><?= htmlspecialchars($najlepszyProdukt['produkt']) ?></strong> &nbsp;|&nbsp;
-                Laczny przychod: <strong><?= number_format($najlepszyProdukt['suma'], 2, ',', ' ') ?> PLN</strong>
+                Łączny przychod: <strong><?= number_format($najlepszyProdukt['suma'], 2, ',', ' ') ?> PLN</strong>
             </p>
         <?php else: ?>
             <p>Brak danych.</p>

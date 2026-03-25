@@ -17,7 +17,7 @@ $user = auth_pobierzUsera();
 <body>
 
 <header>
-    <h1>System ERP</h1>
+    <h1 class="systemerp">System ERP</h1>
     <?php if ($user): ?>
         <nav>
             Zalogowany jako: <strong><?= htmlspecialchars($user['imie']) ?></strong>
