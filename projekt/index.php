@@ -39,7 +39,7 @@ $user = auth_pobierzUsera();
             <p>Wybierz moduł, do którego masz dostęp:</p>
         </div>
 
-        <div class="card">
+        <section class="section">
             <h3>Moduł CRM</h3>
             <?php if (auth_maUprawnienie('crm')): ?>
                 <p>Zarządzanie klientami i subskrypcjami.</p>
@@ -47,27 +47,27 @@ $user = auth_pobierzUsera();
             <?php else: ?>
                 <p>Brak uprawnień do tego modułu.</p>
             <?php endif; ?>
-        </div>
-
-        <div class="card">
+        </section>
+            
+        <section class="section">
             <h3>Moduł Sprzedaży</h3>
             <?php if (auth_maUprawnienie('sprzedaz')): ?>
                 <p>Transakcje, statystyki i raporty sprzedażowe.</p>
                 <a href="Modele/ModulSprzedazy/SalesView.php">Otwórz Moduł Sprzedaży</a>
             <?php else: ?>
                 <p>Brak uprawnień do tego modułu.</p>
-            <?php endif; ?>
-        </div>
+            <?php endif; ?>      
+        </section>
 
-        <div class="card">
-            <h3>Moduł HR</h3>
-            <?php if (auth_maUprawnienie('hr')): ?>
-                <p>Pracownicy, działy, poziomy i urodziny.</p>
-                <a href="Modele/ModulHR/hr_controller.php">Otwórz Moduł HR</a>
-            <?php else: ?>
-                <p>Brak uprawnień do tego modułu.</p>
-            <?php endif; ?>
-        </div>
+        <section class="section">
+                <h3>Moduł HR</h3>
+                <?php if (auth_maUprawnienie('hr')): ?>
+                    <p>Pracownicy, działy, poziomy i urodziny.</p>
+                    <a href="Modele/ModulHR/hr_controller.php">Otwórz Moduł HR</a>
+                <?php else: ?>
+                    <p>Brak uprawnień do tego modułu.</p>
+                <?php endif; ?>
+        </section>
 
     <?php else: ?>
         <!-- ════════════════════════════════════════════ -->
