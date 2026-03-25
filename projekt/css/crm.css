@@ -293,3 +293,24 @@ th {
 .powrot a:hover {
     text-decoration: underline;
 }
+
+/* MENU */
+nav.menu {
+    margin-top: 10px;
+}
+
+nav.menu a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 14px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+nav.menu a:hover {
+    background: rgba(255,255,255,0.3);
+    text-decoration: none;
+}

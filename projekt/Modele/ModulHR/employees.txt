@@ -5,5 +5,12 @@
         "birthdate": "2009-12-17",
         "department": "Recepcja",
         "level": 2
+    },
+    {
+        "id": 2,
+        "name": "Mikol",
+        "birthdate": "2006-08-02",
+        "department": "Toaleta",
+        "level": 5
     }
 ]

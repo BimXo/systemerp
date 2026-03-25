@@ -1,46 +1,138 @@
-/* HR module additional styles */
+/* HR module – style */
 
 .container {
-     max-width: 1200px; 
-     margin: 0 auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
 }
 
 .section {
-     margin-bottom: 30px; 
-     padding: 15px; 
-     border: 1px solid #ddd; 
-     border-radius: 5px; 
+    margin-bottom: 24px;
+    padding: 18px 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fafafa;
 }
 
-input, button {
-     width: auto; 
-     max-width: 420px; 
+.section h2 {
+    margin-top: 0;
+    color: #2f3b50;
 }
 
-button {
-     background-color: #4CAF50; 
-     color: white; 
-     border: none; 
-     cursor: pointer; 
+/* Pola formularza */
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
 }
 
-button:hover { 
-    background-color: #45a049; 
+button[type="submit"] {
+    margin-top: 4px;
+    padding: 7px 18px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
 }
 
-.message { 
-    color: #1f7a24; 
+button[type="submit"]:hover {
+    background-color: #45a049;
 }
 
-.powrot a { 
-    color: #007BFF; 
-    text-decoration: none; 
+/* Komunikat */
+.message {
+    max-width: 1200px;
+    margin: 0 auto 16px;
+    padding: 10px 14px;
+    border-radius: 5px;
+    background: #e6f4ea;
+    color: #1f7a24;
+    font-weight: bold;
+    border: 1px solid #a8d5b0;
 }
 
-.powrot a:hover { 
-    text-decoration: underline;
+/* Tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.93rem;
 }
 
-h1,h2,h3{ 
-    color: #2f3b50; 
+th, td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
 }
+
+th {
+    background: #e8f5e9;
+    font-weight: 600;
+    color: #2f3b50;
+}
+
+tr:nth-child(even) { background: #f5f5f5; }
+
+/* Akcje w tabeli */
+.akcje { white-space: nowrap; }
+
+.btn-edit {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #1565c0;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-right: 4px;
+}
+
+.btn-edit:hover { background: #0d47a1; }
+
+.btn-delete {
+    padding: 4px 10px;
+    background: #c62828;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btn-delete:hover { background: #b71c1c; }
+
+.btn-cancel {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 7px 14px;
+    background: #757575;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-cancel:hover { background: #616161; }
+
+/* Powrót */
+.powrot { margin-top: 16px; }
+
+.powrot a {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.powrot a:hover { text-decoration: underline; }
+
+h1, h2, h3 { color: #2f3b50; }
