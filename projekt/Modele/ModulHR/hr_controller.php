@@ -1,184 +1,219 @@
 <?php
 require_once "hr_model.php";
 
-$model = new ModelHR();
+$model     = new ModelHR();
+$wiadomosc = '';
 
-// Obsługa akcji POST
-$wiadomosc = "";
+// ── OBSŁUGA AKCJI POST ──────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['akcja'])) {
-        switch ($_POST['akcja']) {
-            case 'dodaj':
-                $model->utworz($_POST['imie'], $_POST['dataUrodzenia'], $_POST['dzial'], $_POST['poziom']);
-                $wiadomosc = "Pracownik dodany!";
-                break;
-            case 'usun':
-                $model->usun($_POST['id']);
-                $wiadomosc = "Pracownik usunięty!";
-                break;
-        }
+    $akcja = $_POST['akcja'] ?? '';
+
+    switch ($akcja) {
+        case 'dodaj':
+            $id = $model->utworz(
+                trim($_POST['imie']),
+                $_POST['dataUrodzenia'],
+                trim($_POST['dzial']),
+                (int)$_POST['poziom']
+            );
+            $wiadomosc = "✅ Pracownik #$id został dodany.";
+            break;
+
+        case 'edytuj':
+            $ok = $model->aktualizuj(
+                (int)$_POST['id'],
+                trim($_POST['imie']),
+                $_POST['dataUrodzenia'],
+                trim($_POST['dzial']),
+                (int)$_POST['poziom']
+            );
+            $wiadomosc = $ok
+                ? "✅ Dane pracownika #{$_POST['id']} zaktualizowane."
+                : "❌ Nie znaleziono pracownika o ID {$_POST['id']}.";
+            break;
+
+        case 'usun':
+            $ok = $model->usun((int)$_POST['id']);
+            $wiadomosc = $ok
+                ? "✅ Pracownik #{$_POST['id']} został usunięty."
+                : "❌ Nie znaleziono pracownika o ID {$_POST['id']}.";
+            break;
     }
 }
 
-// Pobieranie danych do wyświetlenia
-$wszyscyPracownicy = $model->pobierzWszystkich();
+// ── DANE DO WIDOKU ──────────────────────────────────────────────────────────
+$wszyscyPracownicy    = $model->pobierzWszystkich();
 $najstarszyNajmlodszy = $model->pobierzNajstarszegoINajmlodszego();
-$sredniWiek = $model->pobierzSredniWiek();
-$liczbaPoDzialach = $model->policzPoDzialach();
+$sredniWiek           = $model->pobierzSredniWiek();
+$liczbaPoDzialach     = $model->policzPoDzialach();
 
-// Obsługa urodzin
-$urodziny = [];
-if (isset($_POST['data_urodzin'])) {
-    $urodziny = $model->pobierzNadchodzaceUrodziny($_POST['data_urodzin']);
+// Tryb edycji – załaduj dane pracownika do formularza
+$edytowany = null;
+if (isset($_GET['edytuj'])) {
+    $edytowany = $model->pobierzPoId((int)$_GET['edytuj']);
 }
 
-// Obsługa poziomu
-$liczbaPoPoziomie = "";
-if (isset($_POST['minimalny_poziom'])) {
-    $liczbaPoPoziomie = $model->policzPoPoziomie($_POST['minimalny_poziom']);
+// Urodziny – obsługa przez GET, żeby nie kolidowała z POST
+$urodziny = [];
+if (isset($_GET['data_urodzin']) && $_GET['data_urodzin'] !== '') {
+    $urodziny = $model->pobierzNadchodzaceUrodziny($_GET['data_urodzin']);
+}
+
+// Poziom – obsługa przez GET
+$liczbaPoPoziomie = null;
+if (isset($_GET['minimalny_poziom']) && $_GET['minimalny_poziom'] !== '') {
+    $liczbaPoPoziomie = $model->policzPoPoziomie((int)$_GET['minimalny_poziom']);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moduł HR</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
-        form { margin-bottom: 15px; }
-        input, button { padding: 8px; margin: 5px 0; }
-        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .message { color: green; font-weight: bold; }
-        .powrot { margin-top: 20px; }
-        .powrot a { color: #007BFF; text-decoration: none; }
-        .powrot a:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/hr.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Moduł HR - Zarządzanie Pracownikami</h1>
+<div class="container">
+    <h1>Moduł HR – Zarządzanie Pracownikami</h1>
 
-        <?php if ($wiadomosc): ?>
-            <div class="message"><?php echo $wiadomosc; ?></div>
+    <?php if ($wiadomosc): ?>
+        <div class="message"><?= htmlspecialchars($wiadomosc) ?></div>
+    <?php endif; ?>
+
+    <!-- ── 1. FORMULARZ DODAWANIA / EDYCJI (CREATE + UPDATE) ───────────── -->
+    <div class="section">
+        <h2><?= $edytowany
+                ? 'Edytuj pracownika #' . htmlspecialchars($edytowany['id'])
+                : '1. Dodaj pracownika' ?></h2>
+        <form method="POST">
+            <input type="hidden" name="akcja" value="<?= $edytowany ? 'edytuj' : 'dodaj' ?>">
+            <?php if ($edytowany): ?>
+                <input type="hidden" name="id" value="<?= (int)$edytowany['id'] ?>">
+            <?php endif; ?>
+
+            <input type="text"   name="imie"          placeholder="Imię"          required
+                   value="<?= htmlspecialchars($edytowany['name']       ?? '') ?>">
+            <input type="date"   name="dataUrodzenia"                              required
+                   value="<?= htmlspecialchars($edytowany['birthdate']  ?? '') ?>">
+            <input type="text"   name="dzial"          placeholder="Dział"         required
+                   value="<?= htmlspecialchars($edytowany['department'] ?? '') ?>">
+            <input type="number" name="poziom"         placeholder="Poziom"        required min="1"
+                   value="<?= htmlspecialchars($edytowany['level']      ?? '') ?>">
+
+            <button type="submit"><?= $edytowany ? 'Zapisz zmiany' : 'Dodaj pracownika' ?></button>
+            <?php if ($edytowany): ?>
+                <a href="hr_controller.php" class="btn-cancel">Anuluj</a>
+            <?php endif; ?>
+        </form>
+    </div>
+
+    <!-- ── 2. LISTA PRACOWNIKÓW (READ) ─────────────────────────────────── -->
+    <div class="section">
+        <h2>2. Lista pracowników</h2>
+        <?php if (empty($wszyscyPracownicy)): ?>
+            <p>Brak pracowników w bazie.</p>
+        <?php else: ?>
+        <table>
+            <tr>
+                <th>ID</th><th>Imię</th><th>Data urodzenia</th><th>Dział</th><th>Poziom</th><th>Akcje</th>
+            </tr>
+            <?php foreach ($wszyscyPracownicy as $p): ?>
+            <tr>
+                <td><?= htmlspecialchars($p['id']) ?></td>
+                <td><?= htmlspecialchars($p['name']) ?></td>
+                <td><?= htmlspecialchars($p['birthdate']) ?></td>
+                <td><?= htmlspecialchars($p['department']) ?></td>
+                <td><?= htmlspecialchars($p['level']) ?></td>
+                <td class="akcje">
+                    <a href="?edytuj=<?= (int)$p['id'] ?>" class="btn-edit">Edytuj</a>
+                    <form method="POST" style="display:inline"
+                          onsubmit="return confirm('Usunąć pracownika <?= htmlspecialchars(addslashes($p['name'])) ?>?')">
+                        <input type="hidden" name="akcja" value="usun">
+                        <input type="hidden" name="id"    value="<?= (int)$p['id'] ?>">
+                        <button type="submit" class="btn-delete">Usuń</button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
         <?php endif; ?>
+    </div>
 
-        <div class="section">
-            <h2>1. Dodaj pracownika</h2>
-            <form method="POST">
-                <input type="hidden" name="akcja" value="dodaj">
-                <input type="text" name="imie" placeholder="Imię" required>
-                <input type="date" name="dataUrodzenia" placeholder="Data urodzenia" required>
-                <input type="text" name="dzial" placeholder="Dział" required>
-                <input type="number" name="poziom" placeholder="Poziom" required>
-                <button type="submit">Dodaj</button>
-            </form>
-        </div>
+    <!-- ── 3. NAJSTARSZY I NAJMŁODSZY (punkt 2) ────────────────────────── -->
+    <div class="section">
+        <h2>3. Najstarszy i najmłodszy pracownik</h2>
+        <p>Najstarszy: <strong><?= htmlspecialchars($najstarszyNajmlodszy['oldest']   ?? 'Brak danych') ?></strong></p>
+        <p>Najmłodszy: <strong><?= htmlspecialchars($najstarszyNajmlodszy['youngest'] ?? 'Brak danych') ?></strong></p>
+    </div>
 
-        <div class="section">
-            <h2>2. Lista pracowników</h2>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Imię</th>
-                    <th>Data urodzenia</th>
-                    <th>Dział</th>
-                    <th>Poziom</th>
-                </tr>
-                <?php foreach ($wszyscyPracownicy as $pracownik): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($pracownik['id']); ?></td>
-                    <td><?php echo htmlspecialchars($pracownik['name']); ?></td>
-                    <td><?php echo htmlspecialchars($pracownik['birthdate']); ?></td>
-                    <td><?php echo htmlspecialchars($pracownik['department']); ?></td>
-                    <td><?php echo htmlspecialchars($pracownik['level']); ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-        </div>
+    <!-- ── 4. ŚREDNI WIEK (punkt 3) ─────────────────────────────────────── -->
+    <div class="section">
+        <h2>4. Średni wiek pracowników</h2>
+        <p>Średni wiek: <strong><?= number_format($sredniWiek, 2, ',', '') ?> lat</strong></p>
+    </div>
 
-        <div class="section">
-            <h2>3. Usuń pracownika</h2>
-            <form method="POST">
-                <input type="hidden" name="akcja" value="usun">
-                <input type="text" name="id" placeholder="ID pracownika" required>
-                <button type="submit">Usuń</button>
-            </form>
-        </div>
-
-        <div class="section">
-            <h2>4. Najstarszy i najmłodszy</h2>
-            <p>Najstarszy: <?php echo htmlspecialchars($najstarszyNajmlodszy['oldest'] ?? 'Brak danych'); ?></p>
-            <p>Najmłodszy: <?php echo htmlspecialchars($najstarszyNajmlodszy['youngest'] ?? 'Brak danych'); ?></p>
-        </div>
-
-        <div class="section">
-            <h2>5. Średni wiek</h2>
-            <p>Średni wiek: <?php echo round($sredniWiek, 2); ?> lat</p>
-        </div>
-
-        <div class="section">
-            <h2>6. Urodziny (w ciągu 2 tygodni od podanej daty)</h2>
-            <form method="POST">
-                <input type="date" name="data_urodzin" required>
-                <button type="submit">Sprawdź</button>
-            </form>
-            <?php if ($urodziny): ?>
+    <!-- ── 5. URODZINY (punkt 4) ────────────────────────────────────────── -->
+    <div class="section">
+        <h2>5. Nadchodzące urodziny (±14 dni od daty)</h2>
+        <form method="GET">
+            <input type="date" name="data_urodzin"
+                   value="<?= htmlspecialchars($_GET['data_urodzin'] ?? '') ?>">
+            <button type="submit">Sprawdź</button>
+        </form>
+        <?php if (isset($_GET['data_urodzin'])): ?>
+            <?php if (empty($urodziny)): ?>
+                <p>Brak pracowników z urodzinami w tym okresie.</p>
+            <?php else: ?>
                 <table>
+                    <tr><th>Imię</th><th>Data urodzenia</th><th>Dział</th></tr>
+                    <?php foreach ($urodziny as $p): ?>
                     <tr>
-                        <th>Imię</th>
-                        <th>Data urodzenia</th>
-                        <th>Dział</th>
-                    </tr>
-                    <?php foreach ($urodziny as $pracownik): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($pracownik['name']); ?></td>
-                        <td><?php echo htmlspecialchars($pracownik['birthdate']); ?></td>
-                        <td><?php echo htmlspecialchars($pracownik['department']); ?></td>
+                        <td><?= htmlspecialchars($p['name']) ?></td>
+                        <td><?= htmlspecialchars($p['birthdate']) ?></td>
+                        <td><?= htmlspecialchars($p['department']) ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </table>
             <?php endif; ?>
-        </div>
-
-        <div class="section">
-            <h2>7. Liczba pracowników z poziomem >=</h2>
-            <form method="POST">
-                <input type="number" name="minimalny_poziom" placeholder="Minimalny poziom" required>
-                <button type="submit">Sprawdź</button>
-            </form>
-            <?php if ($liczbaPoPoziomie !== ""): ?>
-                <p>Liczba: <?php echo $liczbaPoPoziomie; ?></p>
-            <?php endif; ?>
-        </div>
-
-        <div class="section">
-            <h2>8. Liczba na dział</h2>
-            <table>
-                <tr>
-                    <th>Dział</th>
-                    <th>Liczba pracowników</th>
-                </tr>
-                <?php foreach ($liczbaPoDzialach as $dzial => $liczba): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($dzial); ?></td>
-                    <td><?php echo $liczba; ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-        </div>
-
-        <div class="powrot">
-            <a href="../../index.html">Powrót do menu</a>
-        </div>
+        <?php endif; ?>
     </div>
+
+    <!-- ── 6. POZIOM UPRAWNIEŃ (punkt 5) ────────────────────────────────── -->
+    <div class="section">
+        <h2>6. Pracownicy z poziomem uprawnień ≥</h2>
+        <form method="GET">
+            <input type="number" name="minimalny_poziom" placeholder="Minimalny poziom" min="1"
+                   value="<?= htmlspecialchars($_GET['minimalny_poziom'] ?? '') ?>">
+            <button type="submit">Sprawdź</button>
+        </form>
+        <?php if ($liczbaPoPoziomie !== null): ?>
+            <p>Liczba pracowników: <strong><?= $liczbaPoPoziomie ?></strong></p>
+        <?php endif; ?>
+    </div>
+
+    <!-- ── 7. LICZBA NA DZIAŁ (punkt 6) ─────────────────────────────────── -->
+    <div class="section">
+        <h2>7. Liczba pracowników na dział</h2>
+        <?php if (empty($liczbaPoDzialach)): ?>
+            <p>Brak danych.</p>
+        <?php else: ?>
+        <table>
+            <tr><th>Dział</th><th>Liczba pracowników</th></tr>
+            <?php foreach ($liczbaPoDzialach as $dzial => $liczba): ?>
+            <tr>
+                <td><?= htmlspecialchars($dzial) ?></td>
+                <td><?= (int)$liczba ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
+
+    <div class="powrot">
+        <a href="../../index.php">Powrót do menu</a>
+    </div>
+</div>
 </body>
 </html>

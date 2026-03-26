@@ -1,0 +1,316 @@
+/* CRM module style – single-page version */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f6fb;
+    color: #2f3b50;
+    line-height: 1.5;
+}
+
+a {
+    color: #1b6bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header {
+    background: #1f3a7a;
+    color: white;
+    padding: 15px 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.container {
+    max-width: 960px;
+    margin: 24px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+}
+
+/* Każda sekcja modułu */
+.card {
+    background: #fff;
+    border: 1px solid #e1e7ed;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+/* Oddzielnik wewnątrz karty (np. między wyszukaniem a formularzem edycji) */
+.card hr {
+    border: none;
+    border-top: 1px solid #e1e7ed;
+    margin: 18px 0;
+}
+
+/* Pola formularzy */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"] {
+    width: 100%;
+    max-width: 380px;
+    padding: 10px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccd6dd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    display: block;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+select {
+    width: 100%;
+    max-width: 380px;
+    padding: 10px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccd6dd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: white;
+    display: block;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: #2f3b50;
+}
+
+form {
+    margin-bottom: 8px;
+}
+
+/* Przyciski – baza */
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #0b5a8a;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 120px;
+    margin-top: 4px;
+}
+
+button:hover {
+    background: #084b72;
+}
+
+/* Zielony – zapisz */
+.btn-save {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #218838, #1aa085);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Niebieski – szukaj */
+.btn-search {
+    background: linear-gradient(135deg, #007bff, #6610f2);
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.btn-search:hover {
+    background: linear-gradient(135deg, #0056b3, #5a0fc8);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Czerwony – usuń */
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #c82333, #e8680d);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Fioletowy – eksport */
+.btn-export {
+    background: linear-gradient(135deg, #6f42c1, #e83e8c);
+    box-shadow: 0 2px 4px rgba(111, 66, 193, 0.3);
+}
+
+.btn-export:hover {
+    background: linear-gradient(135deg, #5a32a3, #d63384);
+    box-shadow: 0 4px 8px rgba(111, 66, 193, 0.4);
+    transform: translateY(-1px);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    border: 1px solid #e1e7ed;
+    text-align: left;
+}
+
+th {
+    background: #f0f5fa;
+}
+
+/* Komunikaty */
+.message {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 15px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.message.success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: 1px solid #b8daff;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.message.success::before {
+    content: "✓";
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.message.error {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.message.error::before {
+    content: "✕";
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.message.info {
+    background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.message.info::before {
+    content: "ℹ";
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #17a2b8;
+}
+
+.message-content {
+    padding-left: 40px;
+    text-align: left;
+}
+
+/* Link powrotu */
+.powrot {
+    margin: 16px 0 0;
+}
+
+.powrot a {
+    color: #1b6bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.powrot a:hover {
+    text-decoration: underline;
+}
+
+/* MENU */
+nav.menu {
+    margin-top: 10px;
+}
+
+nav.menu a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 14px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+nav.menu a:hover {
+    background: rgba(255,255,255,0.3);
+    text-decoration: none;
+}
