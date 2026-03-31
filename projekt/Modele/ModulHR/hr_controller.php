@@ -4,7 +4,7 @@ require_once "hr_model.php";
 $model     = new ModelHR();
 $wiadomosc = '';
 
-// ── OBSŁUGA AKCJI POST ──────────────────────────────────────────────────────
+//OBSŁUGA AKCJI POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $akcja = $_POST['akcja'] ?? '';
 
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 trim($_POST['dzial']),
                 (int)$_POST['poziom']
             );
-            $wiadomosc = "✅ Pracownik #$id został dodany.";
+            $wiadomosc = "Pracownik #$id został dodany.";
             break;
 
         case 'edytuj':
@@ -28,20 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 (int)$_POST['poziom']
             );
             $wiadomosc = $ok
-                ? "✅ Dane pracownika #{$_POST['id']} zaktualizowane."
-                : "❌ Nie znaleziono pracownika o ID {$_POST['id']}.";
+                ? "Dane pracownika #{$_POST['id']} zaktualizowane."
+                : "Nie znaleziono pracownika o ID {$_POST['id']}.";
             break;
 
         case 'usun':
             $ok = $model->usun((int)$_POST['id']);
             $wiadomosc = $ok
-                ? "✅ Pracownik #{$_POST['id']} został usunięty."
-                : "❌ Nie znaleziono pracownika o ID {$_POST['id']}.";
+                ? "Pracownik #{$_POST['id']} został usunięty."
+                : "Nie znaleziono pracownika o ID {$_POST['id']}.";
             break;
     }
 }
 
-// ── DANE DO WIDOKU ──────────────────────────────────────────────────────────
+//DANE DO WIDOKU
 $wszyscyPracownicy    = $model->pobierzWszystkich();
 $najstarszyNajmlodszy = $model->pobierzNajstarszegoINajmlodszego();
 $sredniWiek           = $model->pobierzSredniWiek();
@@ -82,7 +82,7 @@ if (isset($_GET['minimalny_poziom']) && $_GET['minimalny_poziom'] !== '') {
         <div class="message"><?= htmlspecialchars($wiadomosc) ?></div>
     <?php endif; ?>
 
-    <!-- ── 1. FORMULARZ DODAWANIA / EDYCJI (CREATE + UPDATE) ───────────── -->
+ //1. FORMULARZ DODAWANIA / EDYCJI (CREATE + UPDATE)
     <div class="section">
         <h2><?= $edytowany
                 ? 'Edytuj pracownika #' . htmlspecialchars($edytowany['id'])
@@ -109,7 +109,7 @@ if (isset($_GET['minimalny_poziom']) && $_GET['minimalny_poziom'] !== '') {
         </form>
     </div>
 
-    <!-- ── 2. LISTA PRACOWNIKÓW (READ) ─────────────────────────────────── -->
+//2. LISTA PRACOWNIKÓW
     <div class="section">
         <h2>2. Lista pracowników</h2>
         <?php if (empty($wszyscyPracownicy)): ?>
@@ -141,20 +141,20 @@ if (isset($_GET['minimalny_poziom']) && $_GET['minimalny_poziom'] !== '') {
         <?php endif; ?>
     </div>
 
-    <!-- ── 3. NAJSTARSZY I NAJMŁODSZY (punkt 2) ────────────────────────── -->
+//3. NAJSTARSZY I NAJMŁODSZY
     <div class="section">
         <h2>3. Najstarszy i najmłodszy pracownik</h2>
         <p>Najstarszy: <strong><?= htmlspecialchars($najstarszyNajmlodszy['oldest']   ?? 'Brak danych') ?></strong></p>
         <p>Najmłodszy: <strong><?= htmlspecialchars($najstarszyNajmlodszy['youngest'] ?? 'Brak danych') ?></strong></p>
     </div>
 
-    <!-- ── 4. ŚREDNI WIEK (punkt 3) ─────────────────────────────────────── -->
+//4. ŚREDNI WIEK
     <div class="section">
         <h2>4. Średni wiek pracowników</h2>
         <p>Średni wiek: <strong><?= number_format($sredniWiek, 2, ',', '') ?> lat</strong></p>
     </div>
 
-    <!-- ── 5. URODZINY (punkt 4) ────────────────────────────────────────── -->
+//5. URODZINY
     <div class="section">
         <h2>5. Nadchodzące urodziny (±14 dni od daty)</h2>
         <form method="GET">
@@ -180,7 +180,7 @@ if (isset($_GET['minimalny_poziom']) && $_GET['minimalny_poziom'] !== '') {
         <?php endif; ?>
     </div>
 
-    <!-- ── 6. POZIOM UPRAWNIEŃ (punkt 5) ────────────────────────────────── -->
+//6. POZIOM UPRAWNIEŃ
     <div class="section">
         <h2>6. Pracownicy z poziomem uprawnień ≥</h2>
         <form method="GET">
@@ -193,7 +193,7 @@ if (isset($_GET['minimalny_poziom']) && $_GET['minimalny_poziom'] !== '') {
         <?php endif; ?>
     </div>
 
-    <!-- ── 7. LICZBA NA DZIAŁ (punkt 6) ─────────────────────────────────── -->
+//7. LICZBA NA DZIAŁ
     <div class="section">
         <h2>7. Liczba pracowników na dział</h2>
         <?php if (empty($liczbaPoDzialach)): ?>
