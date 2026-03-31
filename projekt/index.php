@@ -15,27 +15,27 @@ $user = auth_pobierzUsera();
     <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
-
-<header>
-    <h1 class="systemerp">System ERP</h1>
-    <?php if ($user): ?>
-        <nav>
-            Zalogowany jako: <strong><?= htmlspecialchars($user['imie']) ?></strong>
-            &nbsp;&mdash;&nbsp;
-            <a href="index.php?wyloguj=1">Wyloguj</a>
-        </nav>
-    <?php endif; ?>
-</header>
-
 <div class="container">
+
+    <header>
+        <h1 class="systemerp">System ERP</h1>
+        <?php if ($user): ?>
+            <nav>
+                Zalogowany jako: <strong><?= htmlspecialchars($user['imie']) ?></strong>
+                &nbsp;&mdash;&nbsp;
+                <a href="index.php?wyloguj=1">Wyloguj</a>
+            </nav>
+        <?php endif; ?>
+    </header>
+
 
     <?php if ($user): ?>
 //PANEL GŁÓWNY – zalogowany użytkownik
 
-        <div class="card">
+        <section class="section">
             <h2>Witaj, <?= htmlspecialchars($user['imie']) ?>!</h2>
             <p>Wybierz moduł, do którego masz dostęp:</p>
-        </div>
+        </section>
 
         <section class="section">
             <h3>Moduł CRM</h3>
