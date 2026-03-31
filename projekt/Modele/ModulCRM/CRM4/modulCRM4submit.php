@@ -9,9 +9,7 @@ if (empty($id) || !ctype_digit($id) || (int)$id <= 0) {
 $id = (int)$id;
 
 // ── Usuń rekord ──────────────────────────────────────────────────────────────
-// BŁĄD ORYGINAŁU: $tablica[0] jest zaszyfrowane, $id jest jawną liczbą →
-// operator != nigdy nie był spełniony → rekordy nigdy nie były usuwane.
-// Poprawka: odszyfruj $tablica[0] przed porównaniem.
+
 $plik    = '../crm.txt';
 $linie   = file_exists($plik)
     ? file($plik, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)
