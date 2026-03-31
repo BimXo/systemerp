@@ -2,7 +2,7 @@
 // BŁĄD ORYGINAŁU 1: require('cezar.php') – plik nie istnieje; poprawna nazwa to szyfrowanie.php
 require_once '../szyfrowanie.php';
 
-// ── ID przekazywane przez ukryte pole POST (nie przez plik id.txt) ──────────
+//ID przekazywane przez ukryte pole POST (nie przez plik id.txt)
 // BŁĄD ORYGINAŁU 2: id.txt przechowywał niezaszyfrowane ID, ale w pliku crm.txt
 // ID jest zaszyfrowane, więc porównanie nigdy nie zachodziło.
 // Teraz ID płynie bezpośrednio przez POST i jest jawną liczbą.
@@ -11,12 +11,12 @@ if ($id <= 0) {
     die("Brak lub niepoprawne ID rekordu.");
 }
 
-// ── Dane z formularza ────────────────────────────────────────────────────────
+//Dane z formularza
 $imie  = trim($_POST['imie'] ?? '');
 $email = trim($_POST['mail'] ?? '');
 $sub   = trim($_POST['sub']  ?? '');
 
-// ── Walidacja ────────────────────────────────────────────────────────────────
+//Walidacja
 $bledy = [];
 if (empty($imie) || !preg_match('/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]+$/u', $imie)) {
     $bledy[] = "Imię może zawierać tylko litery i spacje.";
