@@ -1,11 +1,7 @@
 <?php
-// BŁĄD ORYGINAŁU 1: require('cezar.php') – plik nie istnieje; poprawna nazwa to szyfrowanie.php
 require_once '../szyfrowanie.php';
 
-// ── ID przekazywane przez ukryte pole POST (nie przez plik id.txt) ──────────
-// BŁĄD ORYGINAŁU 2: id.txt przechowywał niezaszyfrowane ID, ale w pliku crm.txt
-// ID jest zaszyfrowane, więc porównanie nigdy nie zachodziło.
-// Teraz ID płynie bezpośrednio przez POST i jest jawną liczbą.
+// ── ID przekazywane przez ukryte pole POST  ──────────
 $id = (int)trim($_POST['id'] ?? 0);
 if ($id <= 0) {
     die("Brak lub niepoprawne ID rekordu.");
