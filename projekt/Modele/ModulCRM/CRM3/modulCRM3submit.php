@@ -1,14 +1,14 @@
 <?php
 require_once '../szyfrowanie.php';
 
-// ── Pobierz i waliduj ID ────────────────────────────────────────────────────
+//Pobierz i waliduj ID
 $id = trim($_POST['id'] ?? '');
 if (empty($id) || !ctype_digit($id) || (int)$id <= 0) {
     die("Niepoprawne ID.");
 }
 $id = (int)$id;
 
-// ── Szukaj rekordu ──────────────────────────────────────────────────────────
+//Szukaj rekordu
 // BŁĄD ORYGINAŁU: porównywano $dane[0] (zaszyfrowane) z $id (jawne liczba)
 // Poprawka: odszyfruj dane[0] przed porównaniem
 $plik   = '../crm.txt';
