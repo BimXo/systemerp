@@ -1,13 +1,11 @@
 <?php
-// ============================================================
 //  auth.php  –  Logowanie, rejestracja, wylogowanie
-// ============================================================
 
 session_start();
 
 define('USERS_FILE', __DIR__ . '/users.txt');
 
-// ── Helpers ──────────────────────────────────────────────────
+//Helpers 
 
 function auth_zalogowany(): bool {
     return isset($_SESSION['user']);
@@ -23,7 +21,7 @@ function auth_maUprawnienie(string $modul): bool {
     return in_array($modul, $user['uprawnienia'] ?? []);
 }
 
-// ── Plik users.txt (format: login;hash;imie;crm;sprzedaz;hr) ─
+// Plik users.txt (format: login;hash;imie;crm;sprzedaz;hr) 
 
 function auth_wczytajUzytkownikow(): array {
     if (!file_exists(USERS_FILE)) return [];
@@ -68,7 +66,7 @@ function auth_znajdzUsera(string $login): ?array {
     return null;
 }
 
-// ── Akcje ─────────────────────────────────────────────────────
+//Akcje
 
 function auth_zaloguj(string $login, string $haslo): array {
     $user = auth_znajdzUsera(trim($login));
@@ -115,7 +113,6 @@ function auth_rejestruj(string $login, string $haslo, string $imie, array $upraw
     return ['ok' => true];
 }
 
-// ── Obsługa żądań POST / GET ──────────────────────────────────
 //    Zmienne dostępne po require_once w index.php
 
 $_auth_wiadomosc = '';
