@@ -1,14 +1,14 @@
 <?php
 require_once '../szyfrowanie.php';
 
-// ── Walidacja ID ─────────────────────────────────────────────────────────────
+//Walidacja ID
 $id = trim($_POST['id'] ?? '');
 if (empty($id) || !ctype_digit($id) || (int)$id <= 0) {
     die("Niepoprawne ID.");
 }
 $id = (int)$id;
 
-// ── Usuń rekord ──────────────────────────────────────────────────────────────
+// Usuń rekord
 // BŁĄD ORYGINAŁU: $tablica[0] jest zaszyfrowane, $id jest jawną liczbą →
 // operator != nigdy nie był spełniony → rekordy nigdy nie były usuwane.
 // Poprawka: odszyfruj $tablica[0] przed porównaniem.
