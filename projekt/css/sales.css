@@ -149,3 +149,6 @@ tr:nth-child(even) {
 .btn-cancel:hover {
     background: #616161;
 }
+h1{
+    text-align: center;
+}

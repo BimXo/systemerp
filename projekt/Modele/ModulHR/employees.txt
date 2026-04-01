@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "id": 1,
+        "name": "Jakub",
+        "birthdate": "2023-12-02",
+        "department": "Recepcja",
+        "level": 3
+    },
+    {
+        "id": 2,
+        "name": "Mikol",
+        "birthdate": "2023-01-30",
+        "department": "Magazyn",
+        "level": 6
+    }
+]
