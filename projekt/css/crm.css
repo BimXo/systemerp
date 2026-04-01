@@ -25,11 +25,12 @@ header {
     background: #1f3a7a;
     color: white;
     padding: 15px 20px;
+    text-align: center;
 }
 
 header h1 {
     margin: 0;
-    font-size: 1.3rem;
+    font-size: 1.3rem;  
 }
 
 .container {

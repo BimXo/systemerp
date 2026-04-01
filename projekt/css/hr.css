@@ -150,5 +150,8 @@ tr:nth-child(even) {
 }
 
 h1, h2, h3 { 
-    color: #2f3b50; 
+    color: #2f3b50;
+}
+h1{
+    text-align: center;
 }
