@@ -3,7 +3,7 @@
 class ModelHR {
     private $plik = "employees.txt";
 
-    // ── ODCZYT / ZAPIS ──────────────────────────────────────────────────────
+    //ODCZYT / ZAPIS
 
     private function czytajDane(): array {
         if (!file_exists($this->plik)) return [];
@@ -15,7 +15,7 @@ class ModelHR {
         file_put_contents($this->plik, json_encode(array_values($dane), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
-    // ── CREATE ──────────────────────────────────────────────────────────────
+    //CREATE
 
     public function utworz(string $imie, string $dataUrodzenia, string $dzial, int $poziom): int {
         $dane  = $this->czytajDane();
@@ -38,13 +38,13 @@ class ModelHR {
         return $id;
     }
 
-    // ── READ ALL ────────────────────────────────────────────────────────────
+    //READ ALL
 
     public function pobierzWszystkich(): array {
         return $this->czytajDane();
     }
 
-    // ── READ ONE ────────────────────────────────────────────────────────────
+    //READ ONE
 
     public function pobierzPoId(int $id): ?array {
         foreach ($this->czytajDane() as $pracownik) {
@@ -53,7 +53,7 @@ class ModelHR {
         return null;
     }
 
-    // ── UPDATE ──────────────────────────────────────────────────────────────
+    //UPDATE
 
     public function aktualizuj(int $id, string $imie, string $dataUrodzenia, string $dzial, int $poziom): bool {
         $dane      = $this->czytajDane();
@@ -75,7 +75,7 @@ class ModelHR {
         return $znalezion;
     }
 
-    // ── DELETE ──────────────────────────────────────────────────────────────
+    //DELETE
 
     public function usun(int $id): bool {
         $dane    = $this->czytajDane();
@@ -85,7 +85,7 @@ class ModelHR {
         return true;
     }
 
-    // ── SPECJALNE: najstarszy i najmłodszy (punkt 2) ─────────────────────
+    //SPECJALNE: najstarszy i najmłodszy
 
     /**
      * Zwraca tablicę ['oldest' => 'Imię', 'youngest' => 'Imię']
@@ -103,7 +103,7 @@ class ModelHR {
         ];
     }
 
-    // ── SPECJALNE: średni wiek (punkt 3) ─────────────────────────────────
+    //SPECJALNE: średni wiek
 
     /**
      * Zwraca średni wiek pracowników w pełnych latach (float).
@@ -124,7 +124,7 @@ class ModelHR {
         return $suma / count($dane);
     }
 
-    // ── SPECJALNE: nadchodzące urodziny (punkt 4) ─────────────────────────
+    //SPECJALNE: nadchodzące urodziny
 
     /**
      * Zwraca pracowników, których urodziny przypadają w ciągu 14 dni
@@ -152,7 +152,7 @@ class ModelHR {
         return $wynik;
     }
 
-    // ── SPECJALNE: liczba po poziomie (punkt 5) ───────────────────────────
+    //SPECJALNE: liczba po poziomie
 
     /**
      * Zwraca liczbę pracowników z poziomem >= $minimalnyPoziom.
@@ -164,7 +164,7 @@ class ModelHR {
         ));
     }
 
-    // ── SPECJALNE: liczba na dział (punkt 6) ──────────────────────────────
+    //SPECJALNE: liczba na dział
 
     /**
      * Zwraca tablicę asocjacyjną ['NazwaDziału' => liczba_pracowników].

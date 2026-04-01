@@ -6,7 +6,7 @@ $model     = new ModelSprzedazy();
 $kontroler = new KontrolerSprzedazy($model);
 $wiadomosc = '';
 
-// ── OBSŁUGA EKSPORTU (musi być przed jakimkolwiek HTML) ─────
+//OBSŁUGA EKSPORTU
 if (isset($_GET['eksport'])) {
     $format           = $_GET['eksport'];          // 'html' lub 'pdf'
     $wszystkieSprzedaze = $kontroler->model->pobierzWszystkie();
@@ -47,7 +47,7 @@ if (isset($_GET['eksport'])) {
     </div>
   </div>
 
-  <!-- Statystyki ogolne -->
+//Statystyki ogolne
   <div class="stats-row">
     <div class="stat-box">
       <div class="label">Transakcji</div>
@@ -73,7 +73,7 @@ if (isset($_GET['eksport'])) {
     <?php endif; ?>
   </div>
 
-  <!-- Zestawienie po produktach -->
+//Zestawienie po produktach
   <section>
     <h2>Zestawienie wedlug produktow</h2>
     <table>
@@ -93,7 +93,7 @@ if (isset($_GET['eksport'])) {
     </table>
   </section>
 
-  <!-- Najwyzsza transakcja -->
+//Najwyzsza transakcja
   <?php if ($najwyzszaTransakcja): ?>
   <section>
     <h2>Transakcja z najwyzszym przychodem</h2>
@@ -112,7 +112,7 @@ if (isset($_GET['eksport'])) {
   </section>
   <?php endif; ?>
 
-  <!-- Pelna historia -->
+//Pelna historia
   <section>
     <h2>Pelna historia transakcji</h2>
     <?php if (empty($wszystkieSprzedaze)): ?>
@@ -186,7 +186,7 @@ if (isset($_GET['eksport'])) {
     }
 }
 
-// ── OBSŁUGA AKCJI POST ──────────────────────────────────────
+//OBSŁUGA AKCJI POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $akcja = $_POST['akcja'] ?? '';
 
@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// ── DANE DO WIDOKU ───────────────────────────────────────────
+//DANE DO WIDOKU
 $wszystkieSprzedaze  = $kontroler->model->pobierzWszystkie();
 $najwyzszaTransakcja = $kontroler->pobierzNajwyzszaTransakcjaPrzychod();
 $najlepszyProdukt    = $kontroler->pobierzNajwyzszyPrzychodProdukt();
@@ -242,7 +242,7 @@ if (isset($_GET['edytuj'])) {
         <div class="message"><?= htmlspecialchars($wiadomosc) ?></div>
     <?php endif; ?>
 
-    <!-- ── 1. FORMULARZ DODAWANIA / EDYCJI ─────────────────── -->
+ //FORMULARZ DODAWANIA / EDYCJI
     <div class="section">
         <h2><?= $edytowana ? 'Edytuj transakcje #' . htmlspecialchars($edytowana[0]) : '1. Dodaj transakcje' ?></h2>
         <form method="POST">
@@ -267,7 +267,7 @@ if (isset($_GET['edytuj'])) {
         </form>
     </div>
 
-    <!-- ── 2. STATYSTYKI MIĘDZY DATAMI ─────────────────────── -->
+//2. STATYSTYKI MIĘDZY DATAMI
     <div class="section">
         <h2>2. Statystyki okresowe</h2>
         <form method="GET">
@@ -284,7 +284,7 @@ if (isset($_GET['edytuj'])) {
         <?php endif; ?>
     </div>
 
-    <!-- ── 3. NAJWYŻSZA TRANSAKCJA ─────────────────────────── -->
+ //3. NAJWYŻSZA TRANSAKCJA
     <div class="section">
         <h2>3. Transakcja z najwiekszym przychodem</h2>
         <?php if ($najwyzszaTransakcja): ?>
@@ -299,7 +299,7 @@ if (isset($_GET['edytuj'])) {
         <?php endif; ?>
     </div>
 
-    <!-- ── 4. NAJLEPSZY PRODUKT ────────────────────────────── -->
+//4. NAJLEPSZY PRODUKT
     <div class="section">
         <h2>4. Produkt z najwiekszym lacznym przychodem</h2>
         <?php if ($najlepszyProdukt): ?>
@@ -312,7 +312,7 @@ if (isset($_GET['edytuj'])) {
         <?php endif; ?>
     </div>
 
-    <!-- ── 5. HISTORIA TRANSAKCJI ──────────────────────────── -->
+//5. HISTORIA TRANSAKCJI
     <div class="section">
         <h2>5. Historia transakcji</h2>
         <?php if (empty($wszystkieSprzedaze)): ?>
@@ -348,7 +348,7 @@ if (isset($_GET['edytuj'])) {
         <?php endif; ?>
     </div>
 
-    <!-- ── 6. EKSPORT RAPORTU ──────────────────────────────── -->
+//6. EKSPORT RAPORTU
     <div class="section">
         <h2>6. Eksport raportu</h2>
         <p>Wygeneruj pelny raport sprzedazy ze wszystkimi statystykami.</p>

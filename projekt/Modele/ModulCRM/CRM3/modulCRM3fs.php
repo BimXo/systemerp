@@ -1,18 +1,19 @@
 <?php
 require_once '../szyfrowanie.php';
 
-// ── ID przekazywane przez ukryte pole POST  ──────────
+
+//  ID przekazywane przez ukryte pole POST  
 $id = (int)trim($_POST['id'] ?? 0);
 if ($id <= 0) {
     die("Brak lub niepoprawne ID rekordu.");
 }
 
-// ── Dane z formularza ────────────────────────────────────────────────────────
+//Dane z formularza
 $imie  = trim($_POST['imie'] ?? '');
 $email = trim($_POST['mail'] ?? '');
 $sub   = trim($_POST['sub']  ?? '');
 
-// ── Walidacja ────────────────────────────────────────────────────────────────
+//Walidacja
 $bledy = [];
 if (empty($imie) || !preg_match('/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]+$/u', $imie)) {
     $bledy[] = "Imię może zawierać tylko litery i spacje.";
