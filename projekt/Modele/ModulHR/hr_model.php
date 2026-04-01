@@ -75,7 +75,7 @@ class ModelHR {
         return $znalezion;
     }
 
-    //DELETE
+    // DELETE
 
     public function usun(int $id): bool {
         $dane    = $this->czytajDane();
@@ -87,9 +87,9 @@ class ModelHR {
 
     //SPECJALNE: najstarszy i najmłodszy
 
-    /**
-     * Zwraca tablicę ['oldest' => 'Imię', 'youngest' => 'Imię']
-     * lub null dla obu pól gdy brak danych.
+    /*
+      Zwraca tablicę ['oldest' => 'Imię', 'youngest' => 'Imię']
+     lub null dla obu pól gdy brak danych.
      */
     public function pobierzNajstarszegoINajmlodszego(): array {
         $dane = $this->czytajDane();
