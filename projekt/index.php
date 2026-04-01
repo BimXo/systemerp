@@ -30,7 +30,7 @@ $user = auth_pobierzUsera();
 
 
     <?php if ($user): ?>
-//PANEL GŁÓWNY – zalogowany użytkownik
+<!--  PANEL GŁÓWNY – zalogowany użytkownik -->
 
         <section class="section">
             <h2>Witaj, <?= htmlspecialchars($user['imie']) ?>!</h2>
@@ -68,7 +68,7 @@ $user = auth_pobierzUsera();
         </section>
 
     <?php else: ?>
-    //PANEL AUTH – niezalogowany
+    <!--  PANEL AUTH – niezalogowany -->
 
         <nav>
             <a href="?tryb=logowanie">Logowanie</a>
@@ -85,7 +85,7 @@ $user = auth_pobierzUsera();
         <?php endif; ?>
 
         <?php if ($_auth_tryb === 'logowanie'): ?>
-//Formularz logowania
+<!-- Formularz logowania -->
             <div class="card">
                 <h2>Logowanie</h2>
                 <form method="post" action="">
@@ -106,7 +106,7 @@ $user = auth_pobierzUsera();
             </div>
 
         <?php else: ?>
-//Formularz rejestracji
+<!-- Formularz rejestracji -->
             <div class="card">
                 <h2>Rejestracja</h2>
                 <form method="post" action="?tryb=rejestracja">
